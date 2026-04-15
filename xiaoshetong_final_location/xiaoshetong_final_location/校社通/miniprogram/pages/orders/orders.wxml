@@ -1,0 +1,97 @@
+<scroll-view class="page" scroll-y enhanced show-scrollbar="{{false}}">
+  <view class="page-inner">
+    <view class="header-card">
+      <view>
+        <text class="title">订单中心</text>
+        <text class="desc">{{pageTip}}</text>
+      </view>
+      <view class="header-actions">
+        <view class="role-tag">{{userRole === 'demander' ? '需求方' : '跑腿员'}}</view>
+        <button class="light-btn" bindtap="clearOrders">清空</button>
+      </view>
+    </view>
+
+    <block wx:if="{{orders.length}}">
+      <block wx:for="{{orders}}" wx:key="id" wx:for-item="item">
+        <view class="order-card">
+          <view class="order-top">
+            <view>
+              <text class="order-title">{{item.serviceTypeName}}</text>
+              <text class="order-id">订单号：{{item.id}}</text>
+            </view>
+            <view class="state-badge">{{item.stateText}}</view>
+          </view>
+
+          <view class="line" wx:if="{{item.school}}">📍 {{item.school}} - {{item.campus}}</view>
+          <view class="line">联系人：{{item.demanderName}} ({{item.demanderPhone}})</view>
+          <view class="line" wx:if="{{item.riderName}}">跑腿员：{{item.riderName}}</view>
+          <view class="line">取件信息：{{item.pickupCode}}</view>
+          <view class="line">送达地址：{{item.destination}}</view>
+          
+          <view class="line-photo" wx:if="{{item.proofImage}}">
+            <text class="photo-label">验收照片：</text>
+            <image class="proof-img" src="{{item.proofImage}}" mode="aspectFill" bindtap="previewImage" data-url="{{item.proofImage}}"></image>
+          </view>
+
+          <view class="line">订单金额：¥{{item.amount}}</view>
+          <view class="line">跑腿员到手：¥{{item.riderIncomeText}}</view>
+
+          <view class="line-review" wx:if="{{item.currentState === 'rated'}}">
+            <text class="review-stars">跑腿评分：{{item.rating}} 星</text>
+            <text class="review-text" wx:if="{{item.review}}">用户评语：{{item.review}}</text>
+          </view>
+
+          <view class="line">创建时间：{{item.createdAt}}</view>
+          <view class="line" wx:if="{{item.updatedAt}}">更新时间：{{item.updatedAt}}</view>
+          <view class="line" wx:if="{{item.remark}}">备注：{{item.remark}}</view>
+
+          <view class="mine-tag" wx:if="{{item.isMine}}">我接的单</view>
+
+          <view class="actions">
+            <button wx:if="{{userRole === 'demander' && item.currentState === 'pending'}}" class="light-btn mini-btn" data-id="{{item.id}}" data-amount="{{item.amount}}" bindtap="cancelOrder" style="margin-right: 10rpx;">取消订单</button>
+            
+            <button wx:if="{{item.canAccept}}" class="primary-btn mini-btn" data-id="{{item.id}}" bindtap="handleAccept">接单</button>
+            <button wx:if="{{item.canPick}}" class="primary-btn mini-btn" data-id="{{item.id}}" bindtap="handlePicked">标记已取货</button>
+            <button wx:if="{{item.canDeliver}}" class="primary-btn mini-btn" data-id="{{item.id}}" bindtap="handleDelivered">拍照验收并送达</button>
+
+            <view class="action-group" wx:if="{{userRole === 'demander' && item.currentState === 'delivered'}}">
+              <view class="action-row">
+                <button class="danger-btn split-btn" open-type="contact" session-from="order_{{item.id}}">申请客服介入</button>
+                <button class="light-btn split-btn" data-id="{{item.id}}" bindtap="contactOtherParty">联系对方</button>
+              </view>
+              <button class="primary-btn full-btn" data-id="{{item.id}}" bindtap="handleConfirm">确认收货</button>
+            </view>
+
+            <block wx:else>
+              <button wx:if="{{item.canRate}}" class="primary-btn mini-btn" data-id="{{item.id}}" bindtap="openRatingModal">去评价</button>
+              <button wx:if="{{(item.currentState === 'delivered' && userRole === 'rider') || item.currentState === 'confirmed' || item.currentState === 'rated'}}" class="light-btn mini-btn" data-id="{{item.id}}" bindtap="contactOtherParty">联系对方</button>
+            </block>
+
+            <view wx:if="{{item.currentState === 'rated'}}" class="done-tag">订单已完成</view>
+            <view wx:if="{{item.currentState === 'cancelled'}}" class="done-tag" style="background:#f3f4f6; color:#9ca3af;">已取消，退款成功</view>
+            <view wx:if="{{item.currentState === 'appealing'}}" class="done-tag" style="background:#fee2e2; color:#b91c1c;">平台客服核实中...</view>
+          </view>
+        </view>
+      </block>
+    </block>
+
+    <view class="empty-card" wx:else>
+      <text class="empty-title">暂无订单</text>
+      <text class="empty-desc">需求方在下单页发布后会出现在这里，跑腿员也能在这里跟进状态。</text>
+    </view>
+  </view>
+</scroll-view>
+
+<view class="modal-mask" wx:if="{{ratingModalVisible}}" catchtouchmove="true" bindtap="closeRatingModal"></view>
+<view class="rating-modal" wx:if="{{ratingModalVisible}}" catchtouchmove="true">
+  <view class="modal-title">为跑腿员打分</view>
+  <view class="stars-container">
+    <text class="star {{ratingScore >= 1 ? 'active' : ''}}" bindtap="setRating" data-score="1">★</text>
+    <text class="star {{ratingScore >= 2 ? 'active' : ''}}" bindtap="setRating" data-score="2">★</text>
+    <text class="star {{ratingScore >= 3 ? 'active' : ''}}" bindtap="setRating" data-score="3">★</text>
+    <text class="star {{ratingScore >= 4 ? 'active' : ''}}" bindtap="setRating" data-score="4">★</text>
+    <text class="star {{ratingScore >= 5 ? 'active' : ''}}" bindtap="setRating" data-score="5">★</text>
+  </view>
+  <textarea class="review-input" placeholder="写下你的真实评价，帮助其他同学参考~" bindinput="onReviewInput" value="{{ratingText}}"></textarea>
+  <button class="primary-btn submit-rating-btn" bindtap="submitRating">提交评价</button>
+</view>

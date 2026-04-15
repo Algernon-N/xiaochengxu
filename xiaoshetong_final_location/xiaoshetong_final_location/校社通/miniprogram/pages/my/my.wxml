@@ -1,0 +1,179 @@
+<scroll-view class="page" scroll-y enhanced show-scrollbar="{{false}}">
+  <view class="page-inner">
+    <view class="profile-card">
+      <button class="avatar-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+        <image wx:if="{{userInfo.avatarUrl}}" class="avatar-img" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+        <view wx:else class="placeholder">I</view>
+      </button>
+      
+      <view class="profile-main">
+        <text class="name">{{userInfo.nickName}} <text style="font-size:20rpx; color:{{userInfo.isVerified ? '#10b981' : '#ef4444'}};">[{{userInfo.isVerified ? '已认证' : '未认证'}}]</text></text>
+        <text class="desc">信用分 {{userInfo.credit}} · 学号 {{userInfo.studentId}}</text>
+        <view class="role-tag">当前身份：{{userRole === 'demander' ? '需求方' : '跑腿员'}}</view>
+      </view>
+    </view>
+
+    <view class="card" style="background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white;" wx:if="{{userRole === 'rider'}}">
+      <view style="display: flex; justify-content: space-between; align-items: center;">
+        <text class="card-title" style="color: rgba(255,255,255,0.9); margin:0;">累计赚取跑腿费 (仅记账)</text>
+      </view>
+      <view style="margin-top: 20rpx;">
+        <text style="font-size: 24rpx; opacity: 0.8; display: block;">历史累计 (元)</text>
+        <view style="display: flex; align-items: baseline; margin-top: 10rpx;">
+          <text style="font-size: 32rpx; margin-right: 8rpx;">¥</text>
+          <text style="font-size: 56rpx; font-weight: bold;">{{userInfo.balance}}</text>
+        </view>
+        <text style="font-size: 20rpx; opacity: 0.6; display: block; margin-top: 10rpx;">* 实际资金由需求方线下直接支付给您</text>
+      </view>
+    </view>
+
+    <view class="card">
+      <text class="card-title">基本信息</text>
+      <view class="edit-row clickable" data-field="nickName" bindtap="editField">
+        <view class="edit-main"><text class="edit-label">昵称</text><text class="edit-value">{{userInfo.nickName}}</text></view>
+        <text class="row-arrow">></text>
+      </view>
+      <view class="edit-row clickable" data-field="birthday" bindtap="editField">
+        <view class="edit-main"><text class="edit-label">生日</text><text class="edit-value">{{userInfo.birthday}}</text></view>
+        <text class="row-arrow">></text>
+      </view>
+      
+      <view class="edit-row clickable" data-field="phoneNumber" bindtap="editField">
+        <view class="edit-main"><text class="edit-label">手机号码</text><text class="edit-value">{{userInfo.phoneNumber}}</text></view>
+        <text class="row-arrow">></text>
+      </view>
+      <view class="edit-row clickable" data-field="studentId" bindtap="editField">
+        <view class="edit-main"><text class="edit-label">学号</text><text class="edit-value">{{userInfo.studentId}}</text></view>
+        <text class="row-arrow">></text>
+      </view>
+      <view class="edit-row clickable" data-field="idCard" bindtap="editField">
+        <view class="edit-main"><text class="edit-label">身份证号</text><text class="edit-value">{{userInfo.idCard || '未填写'}}</text></view>
+        <text class="row-arrow">></text>
+      </view>
+    </view>
+
+    <view class="card chsi-card">
+      <view class="chsi-header">
+        <view>
+          <text class="card-title">学信网认证</text>
+          <text class="chsi-subtitle">通过中国高等教育学生信息网核验学籍</text>
+        </view>
+        <view class="chsi-badge {{userInfo.chsiVerified ? 'verified' : 'unverified'}}">
+          {{userInfo.chsiVerified ? '已认证' : '未认证'}}
+        </view>
+      </view>
+
+      <block wx:if="{{userInfo.chsiVerified}}">
+        <view class="chsi-info-grid">
+          <view class="chsi-info-item">
+            <text class="chsi-info-label">真实姓名</text>
+            <text class="chsi-info-value">{{userInfo.chsiRealName}}</text>
+          </view>
+          <view class="chsi-info-item">
+            <text class="chsi-info-label">就读院校</text>
+            <text class="chsi-info-value">{{userInfo.chsiSchool}}</text>
+          </view>
+          <view class="chsi-info-item">
+            <text class="chsi-info-label">学历层次</text>
+            <text class="chsi-info-value">{{userInfo.chsiLevel}}</text>
+          </view>
+          <view class="chsi-info-item">
+            <text class="chsi-info-label">学号</text>
+            <text class="chsi-info-value">{{userInfo.studentId}}</text>
+          </view>
+        </view>
+        <view class="chsi-footer-tip">学籍信息已通过学信网核验，不可修改</view>
+      </block>
+
+      <block wx:else>
+        <view class="chsi-unverified-tip">
+          <text class="chsi-tip-title">为什么要学信网认证？</text>
+          <text class="chsi-tip-line">1. 确认你是在校学生，保障校园交易安全</text>
+          <text class="chsi-tip-line">2. 认证后可成为跑腿员接单赚取佣金</text>
+          <text class="chsi-tip-line">3. 认证信息加密存储，仅用于身份核验</text>
+        </view>
+        <button class="chsi-verify-btn" bindtap="openChsiModal">立即认证</button>
+      </block>
+    </view>
+
+    <view class="card">
+      <text class="card-title">身份管理</text>
+      <view class="role-row">
+        <view class="edit-main">
+          <text class="edit-label">当前使用身份</text>
+          <text class="edit-value">{{userRole === 'demander' ? '需求方，负责发布订单' : '跑腿员，负责接单处理'}}</text>
+        </view>
+        <button class="primary-btn" bindtap="switchRole">切换身份</button>
+      </view>
+    </view>
+
+    <view class="card" wx:if="{{userRole === 'rider'}}">
+      <text class="card-title">跑腿表现 (数据源于历史订单)</text>
+      <view style="display: flex; justify-content: space-between; margin-top: 20rpx; text-align: center;">
+        <view><text style="font-size: 36rpx; font-weight: bold; display: block;">{{riderStats.totalOrders}}</text><text style="font-size: 22rpx; color: #6b7280;">完成单量</text></view>
+        <view><text style="font-size: 36rpx; font-weight: bold; display: block;">{{riderStats.goodReviews}}</text><text style="font-size: 22rpx; color: #6b7280;">好评数(≥4星)</text></view>
+        <view><text style="font-size: 36rpx; font-weight: bold; display: block; color: #ea580c;">{{riderStats.averageRating}}</text><text style="font-size: 22rpx; color: #6b7280;">平均星级</text></view>
+      </view>
+    </view>
+
+    <button class="danger-btn" bindtap="resetUserData">重置所有资料</button>
+  </view>
+</scroll-view>
+
+<!-- 学信网认证弹窗 -->
+<view class="modal-mask" wx:if="{{chsiModalVisible}}" bindtap="closeChsiModal"></view>
+<view class="chsi-modal" wx:if="{{chsiModalVisible}}" catchtouchmove="true">
+  <!-- 步骤1：填写信息 -->
+  <block wx:if="{{chsiStep === 1}}">
+    <view class="chsi-modal-header">
+      <text class="chsi-modal-title">学信网学籍认证</text>
+      <text class="chsi-modal-desc">请填写与学信网一致的信息进行核验</text>
+    </view>
+
+    <view class="chsi-field">
+      <text class="chsi-field-label">真实姓名</text>
+      <input class="chsi-input" placeholder="请输入身份证上的姓名" value="{{chsiForm.realName}}" data-field="realName" bindinput="onChsiInput" />
+    </view>
+    <view class="chsi-field">
+      <text class="chsi-field-label">学号</text>
+      <input class="chsi-input" placeholder="请输入学校学号" value="{{chsiForm.studentId}}" data-field="studentId" bindinput="onChsiInput" />
+    </view>
+    <view class="chsi-field">
+      <text class="chsi-field-label">身份证号</text>
+      <input class="chsi-input" placeholder="请输入18位身份证号" value="{{chsiForm.idCard}}" data-field="idCard" bindinput="onChsiInput" maxlength="18" />
+    </view>
+    <view class="chsi-field">
+      <text class="chsi-field-label">就读院校</text>
+      <input class="chsi-input" placeholder="请输入全称，如：西安交通大学" value="{{chsiForm.school}}" data-field="school" bindinput="onChsiInput" />
+    </view>
+
+    <view class="chsi-agreement">
+      <text class="chsi-agreement-text">提交即表示同意《学信网信息查询授权书》，平台将调用学信网接口核验你的在校学籍状态。</text>
+    </view>
+
+    <button class="chsi-submit-btn" bindtap="submitChsiVerify">提交认证</button>
+  </block>
+
+  <!-- 步骤2：验证中 -->
+  <block wx:if="{{chsiStep === 2}}">
+    <view class="chsi-loading-wrap">
+      <view class="chsi-spinner"></view>
+      <text class="chsi-loading-title">正在连接学信网...</text>
+      <text class="chsi-loading-desc">正在核验你的学籍信息，请稍候</text>
+    </view>
+  </block>
+
+  <!-- 步骤3：结果 -->
+  <block wx:if="{{chsiStep === 3}}">
+    <view class="chsi-result-wrap">
+      <view class="chsi-result-icon {{chsiResult.success ? 'success' : 'fail'}}">
+        {{chsiResult.success ? '✓' : '✗'}}
+      </view>
+      <text class="chsi-result-title">{{chsiResult.success ? '认证成功' : '认证失败'}}</text>
+      <text class="chsi-result-msg">{{chsiResult.msg}}</text>
+      <button class="chsi-submit-btn" bindtap="closeChsiModal">
+        {{chsiResult.success ? '完成' : '关闭'}}
+      </button>
+    </view>
+  </block>
+</view>

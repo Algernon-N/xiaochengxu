@@ -1,0 +1,50 @@
+.page { min-height: 100vh; background: radial-gradient(circle at top left, rgba(254, 215, 170, 0.36), transparent 24%), linear-gradient(180deg, #fffaf5 0%, #f8fafc 100%); }
+.page-inner { padding: 24rpx 24rpx 40rpx; }
+.header-card, .order-card { background: #ffffff; border-radius: 28rpx; padding: 24rpx; box-shadow: 0 14rpx 28rpx rgba(148, 163, 184, 0.14); }
+.header-card { display: flex; justify-content: space-between; align-items: flex-start; gap: 20rpx; }
+.title { display: block; font-size: 36rpx; font-weight: 700; color: #111827; }
+.desc { display: block; margin-top: 10rpx; font-size: 22rpx; line-height: 1.6; color: #6b7280; }
+.header-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 10rpx; }
+.role-tag, .state-badge, .mine-tag, .done-tag { display: inline-flex; align-items: center; justify-content: center; padding: 8rpx 16rpx; border-radius: 999rpx; font-size: 22rpx; font-weight: 600; }
+.role-tag { background: #111827; color: #ffffff; }
+.state-badge { background: #fff1e8; color: #c2410c; }
+.mine-tag { margin-top: 16rpx; background: #e0f2fe; color: #0369a1; }
+.done-tag { background: #dcfce7; color: #166534; margin-top: 10rpx; width: 100%;}
+
+.light-btn, .primary-btn, .danger-btn { margin: 0; border: none; border-radius: 999rpx; font-size: 22rpx; font-weight: 600; padding: 0; line-height: normal; display: flex; align-items: center; justify-content: center; box-sizing: border-box; }
+.light-btn::after, .primary-btn::after, .danger-btn::after { border: none; }
+.light-btn { background: #e5e7eb; color: #1f2937; padding: 0 24rpx; height: 60rpx;}
+.primary-btn { background: linear-gradient(135deg, #f97316, #ea580c); color: #ffffff; padding: 0 24rpx; height: 60rpx;}
+.danger-btn { background: #ef4444; color: #ffffff; padding: 0 24rpx; height: 60rpx;}
+
+.action-group { width: 100%; display: flex; flex-direction: column; gap: 20rpx; margin-top: 20rpx; }
+.action-row { display: flex; justify-content: space-between; gap: 20rpx; width: 100%; }
+.split-btn { flex: 1; height: 68rpx; font-size: 26rpx; }
+.full-btn { width: 100%; height: 84rpx; font-size: 30rpx; letter-spacing: 2rpx; border-radius: 42rpx;}
+
+.order-card { margin-top: 18rpx; }
+.order-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16rpx; }
+.order-title { display: block; font-size: 30rpx; font-weight: 700; color: #111827; }
+.order-id { display: block; margin-top: 8rpx; font-size: 22rpx; color: #6b7280; }
+.line { margin-top: 10rpx; font-size: 24rpx; color: #4b5563; }
+.actions { margin-top: 18rpx; display: flex; flex-wrap: wrap; align-items: center; gap: 10rpx; }
+
+.line-photo { margin-top: 16rpx; }
+.photo-label { font-size: 24rpx; color: #4b5563; display: block; margin-bottom: 8rpx; }
+.proof-img { width: 180rpx; height: 180rpx; border-radius: 12rpx; background-color: #f3f4f6; border: 1rpx solid #e5e7eb; }
+.line-review { margin-top: 16rpx; padding: 16rpx; background-color: #fff7ed; border-radius: 16rpx; border: 1rpx dashed #fdba74; }
+.review-stars { display: block; font-size: 26rpx; font-weight: bold; color: #ea580c; }
+.review-text { display: block; margin-top: 8rpx; font-size: 24rpx; color: #9a3412; }
+
+.empty-card { margin-top: 20rpx; border-radius: 28rpx; background: #ffffff; padding: 28rpx; box-shadow: 0 14rpx 28rpx rgba(148, 163, 184, 0.14); }
+.empty-title { display: block; font-size: 30rpx; font-weight: 700; color: #111827; }
+.empty-desc { display: block; margin-top: 10rpx; font-size: 22rpx; line-height: 1.6; color: #6b7280; }
+
+.modal-mask { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 1000; }
+.rating-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 600rpx; background: #ffffff; border-radius: 32rpx; padding: 40rpx; z-index: 1001; text-align: center; box-sizing: border-box; }
+.modal-title { font-size: 36rpx; font-weight: 700; color: #111827; margin-bottom: 30rpx; }
+.stars-container { display: flex; justify-content: center; gap: 20rpx; margin-bottom: 40rpx; }
+.star { font-size: 60rpx; color: #e5e7eb; transition: color 0.2s; }
+.star.active { color: #f59e0b; }
+.review-input { width: 100%; height: 160rpx; background: #f8fafc; border: 2rpx solid #e5e7eb; border-radius: 16rpx; padding: 20rpx; font-size: 26rpx; box-sizing: border-box; margin-bottom: 40rpx; text-align: left; }
+.submit-rating-btn { width: 100%; height: 80rpx; font-size: 28rpx; border-radius: 40rpx; }

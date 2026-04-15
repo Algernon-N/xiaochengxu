@@ -1,0 +1,121 @@
+.page { min-height: 100vh; background: radial-gradient(circle at top left, rgba(251, 191, 36, 0.18), transparent 24%), linear-gradient(180deg, #fffaf4 0%, #f8fafc 100%); }
+.page-inner { padding: 24rpx 24rpx 40rpx; }
+.profile-card, .card { background: #ffffff; border-radius: 28rpx; padding: 24rpx; box-shadow: 0 14rpx 28rpx rgba(148, 163, 184, 0.14); }
+.profile-card { display: flex; gap: 24rpx; align-items: center; }
+.card { margin-top: 18rpx; }
+
+/* ================= 核心修复：强制约束微信按钮的形状 ================= */
+.avatar-btn { 
+  width: 120rpx !important; 
+  height: 120rpx !important; 
+  min-width: 120rpx !important; /* 抵抗微信注入的最小宽度 */
+  min-height: 120rpx !important; 
+  padding: 0 !important; 
+  margin: 0 !important; 
+  border-radius: 50% !important; 
+  overflow: hidden !important; /* 关键：裁剪掉图片超出圆角的部分 */
+  background: transparent; 
+  flex-shrink: 0; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  box-sizing: border-box; 
+  border: 4rpx solid #ffffff; /* 给头像加个漂亮的白边框防锯齿 */
+  box-shadow: 0 4rpx 10rpx rgba(0,0,0,0.1);
+}
+.avatar-btn::after { border: none !important; }
+
+/* 图片撑满容器 */
+.avatar-img { 
+  width: 100%; 
+  height: 100%; 
+  display: block; 
+}
+/* 占位符也撑满容器 */
+.placeholder { 
+  width: 100%; 
+  height: 100%; 
+  background: linear-gradient(135deg, #fb923c, #f97316); 
+  color: #ffffff; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  font-size: 40rpx; 
+  font-weight: 700; 
+}
+/* ===================================================================== */
+
+.profile-main { flex: 1; }
+.name { display: block; font-size: 34rpx; font-weight: 700; color: #111827; }
+.desc { display: block; margin-top: 10rpx; font-size: 22rpx; line-height: 1.6; color: #6b7280; }
+.role-tag { display: inline-flex; margin-top: 14rpx; padding: 8rpx 16rpx; border-radius: 999rpx; background: #111827; color: #ffffff; font-size: 22rpx; font-weight: 600; }
+.card-title { display: block; font-size: 30rpx; font-weight: 700; color: #111827; }
+.edit-row, .role-row, .stat-row { display: flex; justify-content: space-between; align-items: center; gap: 16rpx; padding: 18rpx 0; border-bottom: 2rpx solid #f1f5f9; }
+.edit-row:last-child, .stat-row:last-child { border-bottom: none; }
+.edit-main { flex: 1; min-width: 0; }
+.edit-label { display: block; font-size: 22rpx; color: #6b7280; }
+.edit-value { display: block; margin-top: 8rpx; font-size: 26rpx; line-height: 1.5; color: #111827; word-break: break-all; }
+
+.action-btn, .primary-btn, .danger-btn { margin: 0; border: none; border-radius: 999rpx; font-size: 22rpx; font-weight: 600; padding: 0; line-height: normal; display: flex; align-items: center; justify-content: center; }
+.action-btn::after, .primary-btn::after, .danger-btn::after { border: none; }
+.action-btn { width: 136rpx; height: 60rpx; background: #e5e7eb; color: #1f2937; flex-shrink: 0; }
+.primary-btn { width: 156rpx; height: 64rpx; background: linear-gradient(135deg, #f97316, #ea580c); color: #ffffff; flex-shrink: 0; }
+.danger-btn { margin-top: 20rpx; height: 84rpx; background: #ef4444; color: #ffffff; font-size: 26rpx; }
+
+.stat-name { flex: 1; font-size: 24rpx; color: #111827; }
+.stat-value { font-size: 22rpx; line-height: 1.5; color: #6b7280; text-align: right; }
+.clickable:active { background-color: #f8fafc; border-radius: 12rpx; }
+.row-arrow { color: #9ca3af; font-size: 32rpx; font-weight: 400; padding-left: 20rpx; }
+
+/* ================= 学信网认证卡片 ================= */
+.chsi-card { border: 2rpx solid #e0e7ff; background: linear-gradient(180deg, #f5f7ff 0%, #ffffff 100%); }
+.chsi-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16rpx; }
+.chsi-subtitle { display: block; margin-top: 8rpx; font-size: 22rpx; color: #6b7280; }
+.chsi-badge { padding: 8rpx 20rpx; border-radius: 999rpx; font-size: 22rpx; font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+.chsi-badge.verified { background: #dcfce7; color: #166534; }
+.chsi-badge.unverified { background: #fef3c7; color: #92400e; }
+
+.chsi-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16rpx; margin-top: 20rpx; }
+.chsi-info-item { background: #f8fafc; border-radius: 16rpx; padding: 16rpx; }
+.chsi-info-label { display: block; font-size: 20rpx; color: #9ca3af; }
+.chsi-info-value { display: block; margin-top: 6rpx; font-size: 26rpx; font-weight: 600; color: #111827; word-break: break-all; }
+.chsi-footer-tip { margin-top: 16rpx; font-size: 20rpx; color: #9ca3af; text-align: center; }
+
+.chsi-unverified-tip { margin-top: 20rpx; background: #fffbeb; border: 1rpx dashed #fbbf24; border-radius: 16rpx; padding: 20rpx; }
+.chsi-tip-title { display: block; font-size: 24rpx; font-weight: 700; color: #92400e; margin-bottom: 12rpx; }
+.chsi-tip-line { display: block; font-size: 22rpx; color: #78716c; line-height: 1.8; }
+
+.chsi-verify-btn { margin-top: 20rpx; height: 80rpx; border-radius: 40rpx; background: linear-gradient(135deg, #4f46e5, #6366f1); color: #ffffff; font-size: 28rpx; font-weight: 600; display: flex; align-items: center; justify-content: center; border: none; padding: 0; line-height: normal; }
+.chsi-verify-btn::after { border: none; }
+
+/* ================= 学信网弹窗 ================= */
+.modal-mask { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 1000; }
+.chsi-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 640rpx; background: #ffffff; border-radius: 32rpx; padding: 40rpx; z-index: 1001; box-sizing: border-box; }
+.chsi-modal-header { margin-bottom: 30rpx; }
+.chsi-modal-title { display: block; font-size: 36rpx; font-weight: 700; color: #111827; }
+.chsi-modal-desc { display: block; margin-top: 10rpx; font-size: 22rpx; color: #6b7280; line-height: 1.6; }
+
+.chsi-field { margin-top: 20rpx; }
+.chsi-field-label { display: block; font-size: 24rpx; font-weight: 600; color: #374151; margin-bottom: 10rpx; }
+.chsi-input { background: #f8fafc; border: 2rpx solid #e5e7eb; border-radius: 16rpx; padding: 18rpx; font-size: 26rpx; color: #111827; }
+
+.chsi-agreement { margin-top: 24rpx; }
+.chsi-agreement-text { font-size: 20rpx; color: #9ca3af; line-height: 1.7; }
+
+.chsi-submit-btn { margin-top: 28rpx; height: 84rpx; border-radius: 42rpx; background: linear-gradient(135deg, #4f46e5, #6366f1); color: #ffffff; font-size: 28rpx; font-weight: 600; display: flex; align-items: center; justify-content: center; border: none; padding: 0; line-height: normal; width: 100%; }
+.chsi-submit-btn::after { border: none; }
+
+/* 验证中动画 */
+.chsi-loading-wrap { display: flex; flex-direction: column; align-items: center; padding: 40rpx 0; }
+.chsi-spinner { width: 80rpx; height: 80rpx; border: 6rpx solid #e5e7eb; border-top-color: #4f46e5; border-radius: 50%; animation: chsiSpin 0.8s linear infinite; }
+@keyframes chsiSpin { to { transform: rotate(360deg); } }
+.chsi-loading-title { margin-top: 30rpx; font-size: 30rpx; font-weight: 700; color: #111827; }
+.chsi-loading-desc { margin-top: 12rpx; font-size: 22rpx; color: #6b7280; }
+
+/* 结果页 */
+.chsi-result-wrap { display: flex; flex-direction: column; align-items: center; padding: 30rpx 0; }
+.chsi-result-icon { width: 100rpx; height: 100rpx; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 48rpx; font-weight: 700; }
+.chsi-result-icon.success { background: #dcfce7; color: #16a34a; }
+.chsi-result-icon.fail { background: #fee2e2; color: #dc2626; }
+.chsi-result-title { margin-top: 24rpx; font-size: 32rpx; font-weight: 700; color: #111827; }
+.chsi-result-msg { margin-top: 12rpx; font-size: 24rpx; color: #6b7280; text-align: center; line-height: 1.6; }

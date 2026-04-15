@@ -1,0 +1,52 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/placeOrder/placeOrder",
+    "pages/orders/orders",
+    "pages/my/my"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#4f46e5",
+    "navigationBarTitleText": "校社通",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#6b7280",
+    "selectedColor": "#4f46e5",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/placeOrder/placeOrder",
+        "text": "下单/接单"
+      },
+      {
+        "pagePath": "pages/orders/orders",
+        "text": "订单"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "requiredPrivateInfos": [
+    "chooseLocation",
+    "getLocation"
+  ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于自动识别所在校区，并在地图上精确选择送达地址"
+    },
+    "scope.userLocationBackground": {
+      "desc": "实时定位需要持续获取你的位置，用于自动匹配最近校区"
+    }
+  },
+  "requiredBackgroundModes": ["location"]
+}

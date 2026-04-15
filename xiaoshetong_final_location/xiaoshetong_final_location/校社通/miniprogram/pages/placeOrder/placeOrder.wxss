@@ -1,0 +1,68 @@
+.page { min-height: 100vh; background: radial-gradient(circle at top right, rgba(191, 219, 254, 0.45), transparent 28%), linear-gradient(180deg, #fff9f5 0%, #f8fafc 100%); }
+.page-inner { padding: 24rpx 24rpx 40rpx; }
+.top-card, .form-card, .hall-card { background: #ffffff; border-radius: 30rpx; padding: 24rpx; box-shadow: 0 14rpx 28rpx rgba(148, 163, 184, 0.14); }
+.top-card { display: flex; justify-content: space-between; align-items: flex-start; gap: 20rpx; background: linear-gradient(135deg, #fff0e5 0%, #ffffff 100%); }
+.top-title { display: block; font-size: 36rpx; font-weight: 700; color: #111827; }
+.top-desc { display: block; margin-top: 10rpx; font-size: 22rpx; line-height: 1.6; color: #6b7280; }
+.top-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 10rpx; }
+.role-tag, .count-badge, .state-badge { display: inline-flex; align-items: center; justify-content: center; padding: 8rpx 16rpx; border-radius: 999rpx; font-size: 22rpx; font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+.role-tag { background: #111827; color: #ffffff; }
+.count-badge, .state-badge { background: #fff1e8; color: #c2410c; }
+
+/* 修复所有按钮垂直对齐 */
+.switch-btn, .primary-btn { margin: 0; border: none; border-radius: 999rpx; font-size: 24rpx; font-weight: 600; padding: 0; display: flex; align-items: center; justify-content: center; line-height: normal; box-sizing: border-box; }
+.switch-btn::after, .primary-btn::after { border: none; }
+.switch-btn { min-width: 148rpx; height: 64rpx; background: #fb923c; color: #ffffff; }
+
+.form-card, .hall-card { margin-top: 20rpx; }
+.section-title { display: block; font-size: 30rpx; font-weight: 700; color: #111827; }
+.section-desc { display: block; margin-top: 10rpx; font-size: 22rpx; line-height: 1.6; color: #6b7280; }
+.service-chips { display: flex; flex-wrap: wrap; gap: 12rpx; margin-top: 20rpx; }
+.service-chip { padding: 14rpx 18rpx; border-radius: 18rpx; background: #f8fafc; border: 1rpx solid #e5e7eb; }
+.service-chip.active { background: #fff1e8; border-color: #fdba74; }
+.chip-title { font-size: 24rpx; color: #111827; }
+.field { margin-top: 18rpx; }
+.label { display: block; font-size: 25rpx; font-weight: 600; color: #374151; margin-bottom: 10rpx; }
+.picker, .input, .textarea { background: #f8fafc; border: 2rpx solid #e5e7eb; border-radius: 18rpx; padding: 16rpx; font-size: 26rpx; color: #111827; min-height: 40rpx; }
+.textarea { width: 100%; min-height: 140rpx; box-sizing: border-box; }
+.hint { display: block; margin-top: 8rpx; font-size: 22rpx; color: #6b7280; }
+
+/* 复合地址输入框样式 */
+.location-input-wrap { display: flex; align-items: center; background: #f8fafc; border: 2rpx solid #e5e7eb; border-radius: 18rpx; padding: 16rpx; }
+.location-icon-btn { color: #ea580c; font-size: 24rpx; font-weight: bold; padding-left: 16rpx; border-left: 2rpx solid #e5e7eb; margin-left: 16rpx; white-space: nowrap; }
+
+.primary-btn { margin-top: 22rpx; height: 84rpx; background: linear-gradient(135deg, #f97316, #ea580c); color: #ffffff; font-size: 28rpx; width: 100%; }
+.mini-btn { margin-top: 24rpx; height: 72rpx; font-size: 26rpx; width: 100%; border-radius: 36rpx; }
+
+.hall-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16rpx; }
+.section-link { font-size: 24rpx; color: #ea580c; font-weight: 600; }
+.hall-order { margin-top: 18rpx; background: #f8fafc; border-radius: 22rpx; padding: 20rpx; overflow: hidden; }
+.hall-order.compact { padding-bottom: 18rpx; }
+.hall-top { display: flex; justify-content: space-between; align-items: center; gap: 16rpx; }
+.hall-title { font-size: 28rpx; font-weight: 700; color: #111827; }
+.hall-line { display: block; margin-top: 10rpx; font-size: 24rpx; color: #4b5563; }
+.empty-card { margin-top: 18rpx; border-radius: 22rpx; background: linear-gradient(180deg, #fff7ed 0%, #ffffff 100%); border: 1rpx dashed #fdba74; padding: 24rpx; }
+.empty-title { display: block; font-size: 28rpx; font-weight: 700; color: #111827; }
+.empty-desc { display: block; margin-top: 8rpx; font-size: 22rpx; line-height: 1.6; color: #6b7280; }
+
+/* ================== 坐标信息 ================== */
+.coord-info { margin-top: 10rpx; padding: 8rpx 16rpx; background: #f0fdf4; border-radius: 12rpx; border: 1rpx solid #bbf7d0; }
+.coord-text { font-size: 20rpx; color: #166534; }
+
+/* ================== 校内建筑快捷选择 ================== */
+.building-section { margin-top: 18rpx; }
+.building-label { font-size: 22rpx; color: #6b7280; font-weight: 600; display: block; margin-bottom: 12rpx; }
+.building-chips { display: flex; flex-wrap: wrap; gap: 12rpx; }
+.building-chip { background: linear-gradient(135deg, #fff7ed, #fffbf5); color: #9a3412; font-size: 22rpx; padding: 10rpx 22rpx; border-radius: 14rpx; border: 1rpx solid #fed7aa; transition: all 0.2s; }
+.building-chip.dorm { background: linear-gradient(135deg, #eff6ff, #f0f7ff); color: #1e40af; border-color: #93c5fd; }
+.building-chip:active { background: #fed7aa; border-color: #fb923c; }
+.building-chip.dorm:active { background: #bfdbfe; border-color: #60a5fa; }
+
+/* ================== 历史地址标签样式 ================== */
+.history-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 12rpx; margin-top: 16rpx; }
+.history-label { font-size: 22rpx; color: #9ca3af; }
+.history-chip { background: #f1f5f9; color: #4b5563; font-size: 22rpx; padding: 8rpx 20rpx; border-radius: 12rpx; max-width: 300rpx; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; transition: all 0.2s; border: 1rpx solid #e5e7eb; }
+.history-chip:active { background: #e2e8f0; border-color: #cbd5e1; }
+
+/* ================== 并排表单布局 ================== */
+.field-row { display: flex; gap: 20rpx; margin-top: 18rpx; }

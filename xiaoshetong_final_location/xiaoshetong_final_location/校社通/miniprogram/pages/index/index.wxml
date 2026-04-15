@@ -1,0 +1,130 @@
+<scroll-view class="page" scroll-y enhanced show-scrollbar="{{false}}">
+  <view class="page-inner">
+    <view class="location-bar">
+      <view class="location-left">
+        <picker mode="region" bindchange="bindRegionChange" value="{{region}}">
+          <view class="region-picker">
+            <text class="location-icon">📍</text>
+            <text class="location-text">{{region[0]}}·{{region[1]}}</text>
+          </view>
+        </picker>
+        <view class="divider">|</view>
+        <picker mode="multiSelector" bindchange="bindSchoolChange" bindcolumnchange="bindSchoolColumnChange" value="{{schoolIndex}}" range="{{schoolRange}}">
+          <view class="school-picker">
+            <text class="location-text">{{schoolRange[0][schoolIndex[0]]}}·{{schoolRange[1][schoolIndex[1]]}}</text>
+            <text class="arrow-down">▼</text>
+          </view>
+        </picker>
+        <view class="divider">|</view>
+        <view class="relocate-btn {{locating ? 'locating' : ''}}" bindtap="autoDetectLocation">
+          <text class="relocate-icon">{{locating ? '⏳' : '🎯'}}</text>
+          <text class="relocate-text">{{locating ? '定位中' : '定位'}}</text>
+        </view>
+        <view class="live-btn {{liveMode ? 'live-on' : ''}}" bindtap="toggleLiveLocation">
+          <text class="live-dot" wx:if="{{liveMode}}"></text>
+          <text class="live-text">{{liveMode ? '实时中' : '实时'}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="location-tip-bar" wx:if="{{locationTip || gpsLat}}">
+      <text class="location-tip-text">{{locationTip}}</text>
+      <view class="gps-detail" wx:if="{{gpsLat}}">
+        <text class="gps-coord">{{gpsLat}}, {{gpsLng}}</text>
+        <text class="gps-accuracy {{gpsAccuracy === '--' ? '' : 'has-value'}}">±{{gpsAccuracy}}</text>
+      </view>
+    </view>
+
+    <view class="hero">
+      <view class="hero-header">
+        <view class="hero-copy">
+          <text class="brand">校社通</text>
+          <text class="headline">{{roleHeadline}}</text>
+        </view>
+        <button class="switch-btn" bindtap="switchRole">{{switchRoleText}}</button>
+      </view>
+
+      <view class="hero-metrics">
+        <view class="metric-card">
+          <text class="metric-num">{{pendingCount}}</text>
+          <text class="metric-label">待接订单</text>
+        </view>
+        <view class="metric-card">
+          <text class="metric-num">{{activeCount}}</text>
+          <text class="metric-label">处理中</text>
+        </view>
+        <view class="metric-card wide">
+          <text class="metric-num">{{userRole === 'demander' ? '需求方' : '跑腿员'}}</text>
+          <text class="metric-label">{{userInfo.nickName}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="service-board">
+      <view class="section-head">
+        <view>
+          <text class="section-title">校园高频服务</text>
+        </view>
+        <text class="section-link" bindtap="goPlacePage">{{userRole === 'demander' ? '去下单' : '去接单'}}</text>
+      </view>
+
+      <view class="service-grid">
+        <block wx:for="{{serviceCards}}" wx:key="key" wx:for-item="item" wx:for-index="index">
+          <view class="service-item" bindtap="goService" data-index="{{index}}">
+            <view class="service-icon service-icon-{{item.key}}">
+              <text class="service-icon-text">{{item.short}}</text>
+            </view>
+            <text class="service-name">{{item.title}}</text>
+            <text class="service-desc">{{item.subtitle}}</text>
+          </view>
+        </block>
+      </view>
+    </view>
+
+    <view class="shortcut-row">
+      <view class="shortcut-card warm" bindtap="goPlacePage">
+        <text class="shortcut-eyebrow">{{userRole === 'demander' ? '需求方模式' : '跑腿员模式'}}</text>
+        <text class="shortcut-title">{{primaryTitle}}</text>
+        <text class="shortcut-desc">{{primaryDesc}}</text>
+      </view>
+      <view class="shortcut-card cool" bindtap="goOrders">
+        <text class="shortcut-eyebrow">订单中心</text>
+        <text class="shortcut-title">查看订单进度</text>
+        <text class="shortcut-desc">状态变化统一收口。</text>
+      </view>
+    </view>
+
+    <view class="order-panel">
+      <view class="section-head">
+        <view>
+          <text class="section-title">最新订单</text>
+        </view>
+        <text class="section-link" bindtap="goOrders">查看全部</text>
+      </view>
+
+      <block wx:if="{{latestOrder}}">
+        <view class="latest-top">
+          <view>
+            <text class="latest-title">{{latestOrder.serviceTypeName}}</text>
+            <text class="latest-meta">状态：{{latestOrderStateText}}</text>
+          </view>
+          <view class="state-pill">{{latestOrderStateText}}</view>
+        </view>
+        <view class="detail-line">送达地址：{{latestOrder.destination}}</view>
+        <view class="finance-row">
+          <view class="finance-card">
+            <text class="finance-label">订单金额</text>
+            <text class="finance-num">¥{{latestOrder.amount}}</text>
+          </view>
+          <view class="finance-card">
+            <text class="finance-label">跑腿员到手</text>
+            <text class="finance-num">¥{{latestRiderIncomeText}}</text>
+          </view>
+        </view>
+      </block>
+      <view class="empty-card" wx:else>
+        <text class="empty-title">还没有订单</text>
+        <text class="empty-desc">点击服务入口即可发起第一单。</text>
+      </view>
+    </view>
+  </view>
+</scroll-view>
