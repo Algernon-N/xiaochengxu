@@ -207,13 +207,7 @@ Page({
     const currentSchool = wx.getStorageSync('currentSchool') || '未知学校';
     const currentCampus = wx.getStorageSync('currentCampus') || '未知校区';
 
-    let history = wx.getStorageSync('addressHistory') || [];
-    history = history.filter(item => item !== fullDestination); 
-    history.unshift(fullDestination); 
-    if (history.length > 3) history = history.slice(0, 3); 
-    wx.setStorageSync('addressHistory', history);
-
-    const order = createOrder({ 
+    const orderPayload = { 
       serviceTypeIndex, 
       pickupCode, 
       destination: fullDestination, 
@@ -221,33 +215,27 @@ Page({
       remark, 
       demanderName: contactName, 
       demanderStudentId: userInfo.studentId, 
-      demanderPhone: contactPhone, 
       school: currentSchool, 
       campus: currentCampus 
+    };
+
+    // サーバーへ注文データを送信
+    wx.request({
+      url: 'http://localhost:8080/api/orders', // Spring BootのURL
+      method: 'POST',
+      data: orderPayload,
+      success: (res) => {
+        if (res.statusCode === 200) {
+          wx.showToast({ title: '发布成功', icon: 'success' });
+          setTimeout(() => { wx.switchTab({ url: '/pages/orders/orders' }); }, 600);
+        } else {
+          wx.showToast({ title: '系统错误', icon: 'none' });
+        }
+      },
+      fail: () => {
+        wx.showToast({ title: '网络请求失败', icon: 'none' });
+      }
     });
-    
-    const nextUserInfo = bumpServiceStats(userInfo, serviceTypeIndex);
-    
-    const orders = wx.getStorageSync('ordersList') || [];
-    orders.unshift(order);
-    
-    app.globalData.userInfo = nextUserInfo;
-    wx.setStorageSync('ordersList', orders); 
-    wx.setStorageSync('userInfo', nextUserInfo);
-    
-    this.setData({ 
-      userInfo: nextUserInfo, 
-      pickupCode: '', 
-      destination: '', 
-      detailAddress: '',
-      amount: '12.50', 
-      remark: '' 
-    });
-    
-    this.refreshPage(); 
-    
-    wx.showToast({ title: '发布成功', icon: 'success' });
-    setTimeout(() => { wx.switchTab({ url: '/pages/orders/orders' }); }, 600);
   },
 
   acceptHallOrder(e) {
