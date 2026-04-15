@@ -47,8 +47,18 @@ Page({
   refreshOrders() {
     const userInfo = normalizeUser(app.globalData.userInfo || wx.getStorageSync('userInfo'));
     const userRole = app.globalData.userRole || wx.getStorageSync('userRole') || 'demander';
-    const orders = wx.getStorageSync('ordersList') || [];
+    const currentCampus = wx.getStorageSync('currentCampus') || '';
 
+    wx.request({
+      url: `http://localhost:8080/api/orders?campus=${encodeURIComponent(currentCampus)}`,
+      method: 'GET',
+      success: (res) => {
+        const orders = res.data || [];
+        this.setData({
+          userInfo,
+          userRole,
+          orders: decorateOrders(orders, userRole, userInfo),
+          
     app.globalData.userInfo = userInfo;
     app.globalData.userRole = userRole;
 
